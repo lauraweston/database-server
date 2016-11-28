@@ -1,14 +1,20 @@
 require 'sinatra/base'
+require_relative './models/database.rb'
 
 class DatabaseServerApp < Sinatra::Base
   set :port, 4000
 
+  before do
+    @database = Database.instance
+  end
+
   post '/set' do
-    @data = {}
+    if @database.nil?
+      @database = Database.create
+    end
     params.each { |key, value|
-      @data[key.to_sym] = value
+      @database.add_pair(key, value)
     }
-    "#{@data}"
   end
 
   run! if app_file == $0

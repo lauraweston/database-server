@@ -1,7 +1,15 @@
 
 class Database
   attr_reader :data
-  
+
+  def self.create
+    @current_database = self.new
+  end
+
+  def self.instance
+    @current_database
+  end
+
   def initialize
     @data = {}
   end
