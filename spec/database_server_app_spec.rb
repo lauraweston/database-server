@@ -23,4 +23,17 @@ describe DatabaseServerApp do
       post "/set?somekey=somevalue"
     end
   end
+
+  describe "get /get" do
+    it "has a status of ok" do
+      get "/get"
+      expect(last_response).to be_ok
+    end
+
+    it "given a query string with a key name, it returns the value of the key" do
+      post "/set?somekey=somevalue"
+      get "/get?key=somekey"
+      expect(last_response.body).to eq "somevalue"
+    end
+  end
 end

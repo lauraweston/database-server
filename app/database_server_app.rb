@@ -17,5 +17,11 @@ class DatabaseServerApp < Sinatra::Base
     }
   end
 
+  get '/get' do
+    key = params[:key]
+    value = @database.data[key.to_sym]
+    "#{value}"
+  end
+
   run! if app_file == $0
 end
